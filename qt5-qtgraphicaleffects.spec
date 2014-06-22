@@ -1,5 +1,3 @@
-# TODO:
-# - cleanup
 #
 # Conditional build:
 %bcond_without	qch	# documentation in QCH format
@@ -9,20 +7,19 @@
 %define		qtdeclarative_ver	%{version}
 %define		qtscript_ver		%{version}
 %define		qttools_ver		%{version}
-Summary:	The Qt5 Graphical Effects modules
-Summary(pl.UTF-8):	Moduły Qt5 Graphical Effects
+Summary:	The Qt5 Graphical Effects module
+Summary(pl.UTF-8):	Moduł Qt5 Graphical Effects
 Name:		qt5-%{orgname}
-Version:	5.2.0
-Release:	0.1
-License:	LGPL v2.1 or GPL v3.0
+Version:	5.3.0
+Release:	1
+# pngdumper is LGPL+exception/GPL, all the qml code is BSD
+License:	BSD
 Group:		X11/Libraries
-Source0:	http://download.qt-project.org/official_releases/qt/5.2/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	85e94989bbc624f676102f0ea343b6dd
+Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	a4170d057978794c2c3c477e841a0e08
 URL:		http://qt-project.org/
-BuildRequires:	qt5-qtbase-devel >= %{qtbase_ver}
-BuildRequires:	qt5-qtdeclarative-devel >= %{qtdeclarative_ver}
-BuildRequires:	qt5-qtscript-devel >= %{qtscript_ver}
-BuildRequires:	qt5-qttools-devel >= %{qttools_ver}
+BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Quick-devel >= %{qtdeclarative_ver}
 %if %{with qch}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
@@ -41,7 +38,7 @@ Qt is a cross-platform application and UI framework. Using Qt, you can
 write web-enabled applications once and deploy them across desktop,
 mobile and embedded systems without rewriting the source code.
 
-This package contains Qt5 Graphical Effects modules.
+This package contains Qt5 Graphical Effects module.
 
 %description -l pl.UTF-8
 Qt to wieloplatformowy szkielet aplikacji i interfejsów użytkownika.
@@ -49,15 +46,26 @@ Przy użyciu Qt można pisać aplikacje powiązane z WWW i wdrażać je w
 systemach biurkowych, przenośnych i wbudowanych bez przepisywania kodu
 źródłowego.
 
-Ten pakiet zawiera moduły Qt5 Graphical Effects.
+Ten pakiet zawiera moduł Qt5 Graphical Effects.
 
-%package devel
-Summary:	The Qt5 Graphical Effects - development files
-Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+%package -n Qt5Quick-graphicaleffects
+Summary:	Qt5 Graphical Effects module for Qt5Quick library
+Summary(pl.UTF-8):	Moduł Qt5 Graphical Effects dla biblioteki Qt5Quick
+Group:		X11/Libraries
+Requires:	Qt5Quick >= %{qtdeclarative_ver}
+Obsoletes:	qt5-qtgraphicaleffects
 
-%description devel
-The Qt5 Graphical Effects - development files.
+%description -n Qt5Quick-graphicaleffects
+The Qt Graphical Effects module for Qt5Quick provides a set of QML
+types for adding visually impressive and configurable effects to user
+interfaces. Effects are visual items that can be added to Qt Quick
+user interface as UI components.
+
+%description -n Qt5Quick-graphicaleffects -l pl.UTF-8
+Moduł Qt Graphical Effects dla biblioteki Qt5Quick udostępnia zbiór
+typów QML do dodawania robiących wrażenie, konfigurowalnych efektów
+wizualnych do interfejsów użytkownika. Efekty to elementy wizualne,
+które można dodać do interfejsu użytkownika jako komponenty UI.
 
 %package doc
 Summary:	Qt5 Graphical Effects documentation in HTML format
@@ -89,16 +97,6 @@ Qt5 Graphical Effects documentation in QCH format.
 %description doc-qch -l pl.UTF-8
 Dokumentacja do modułów Qt5 Graphical Effects w formacie QCH.
 
-%package examples
-Summary:	The Qt5 Graphical Effects examples
-Group:		X11/Development/Libraries
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description examples
-The Qt5 Graphical Effects - examples.
-
 %prep
 %setup -q -n %{orgname}-opensource-src-%{version}
 
@@ -118,9 +116,10 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -n Qt5Quick-graphicaleffects
 %defattr(644,root,root,755)
-%{qt5dir}/qml/*
+%doc dist/changes-*
+%{qt5dir}/qml/QtGraphicalEffects
 
 %files doc
 %defattr(644,root,root,755)
