@@ -9,13 +9,13 @@
 Summary:	The Qt5 Graphical Effects module
 Summary(pl.UTF-8):	Moduł Qt5 Graphical Effects
 Name:		qt5-%{orgname}
-Version:	5.3.2
+Version:	5.4.1
 Release:	1
 # pngdumper is LGPL+exception/GPL, all the qml code is BSD
 License:	BSD
 Group:		X11/Libraries
-Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	6dd8dd6906bbfb52a292cd25927bb9a8
+Source0:	http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	02bec01c2af9a7d08582fbffbfa4976a
 URL:		http://qt-project.org/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Quick-devel >= %{qtdeclarative_ver}
