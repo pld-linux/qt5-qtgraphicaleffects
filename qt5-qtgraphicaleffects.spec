@@ -57,7 +57,7 @@ Requires:	Qt5Core >= %{qtbase_ver}
 Requires:	Qt5Gui >= %{qtbase_ver}
 Requires:	Qt5Qml >= %{qtdeclarative_ver}
 Requires:	Qt5Quick >= %{qtdeclarative_ver}
-Obsoletes:	qt5-qtgraphicaleffects
+Obsoletes:	qt5-qtgraphicaleffects < 5.3.0
 
 %description -n Qt5Quick-graphicaleffects
 The Qt Graphical Effects module for Qt5Quick provides a set of QML
