@@ -11,13 +11,14 @@ Summary(pl.UTF-8):	Moduł Qt5 Graphical Effects
 Name:		qt5-%{orgname}
 Version:	5.15.2
 Release:	2
-# pngdumper is LGPL+exception/GPL, all the qml code is BSD
-License:	BSD
+License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	2ae1ef858425aa71d62b15467a84b022
-URL:		http://www.qt.io/
+URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Qml-devel >= %{qtdeclarative_ver}
 BuildRequires:	Qt5Quick-devel >= %{qtdeclarative_ver}
 %if %{with doc}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
@@ -25,7 +26,7 @@ BuildRequires:	qt5-assistant >= %{qttools_ver}
 BuildRequires:	qt5-qtdeclarative >= %{qtdeclarative_ver}
 BuildRequires:	qt5-build >= %{qtbase_ver}
 BuildRequires:	qt5-qmake >= %{qtbase_ver}
-BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,6 +53,9 @@ Ten pakiet zawiera moduł Qt5 Graphical Effects.
 Summary:	Qt5 Graphical Effects module for Qt5Quick library
 Summary(pl.UTF-8):	Moduł Qt5 Graphical Effects dla biblioteki Qt5Quick
 Group:		X11/Libraries
+Requires:	Qt5Core >= %{qtbase_ver}
+Requires:	Qt5Gui >= %{qtbase_ver}
+Requires:	Qt5Qml >= %{qtdeclarative_ver}
 Requires:	Qt5Quick >= %{qtdeclarative_ver}
 Obsoletes:	qt5-qtgraphicaleffects
 
@@ -72,9 +76,7 @@ Summary:	Qt5 Graphical Effects documentation in HTML format
 Summary(pl.UTF-8):	Dokumentacja do modułów Qt5 Graphical Effects w formacie HTML
 Group:		Documentation
 Requires:	qt5-doc-common >= %{qtbase_ver}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description doc
 Qt5 Graphical Effects documentation in HTML format.
@@ -87,9 +89,7 @@ Summary:	Qt5 Graphical Effects documentation in QCH format
 Summary(pl.UTF-8):	Dokumentacja do modułów Qt5 Graphical Effects w formacie QCH
 Group:		Documentation
 Requires:	qt5-doc-common >= %{qtbase_ver}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description doc-qch
 Qt5 Graphical Effects documentation in QCH format.
@@ -107,6 +107,7 @@ qmake-qt5
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
@@ -122,7 +123,18 @@ rm -rf $RPM_BUILD_ROOT
 %files -n Qt5Quick-graphicaleffects
 %defattr(644,root,root,755)
 %doc dist/changes-*
-%{qt5dir}/qml/QtGraphicalEffects
+%dir %{qt5dir}/qml/QtGraphicalEffects
+# R: Core Qml
+%attr(755,root,root) %{qt5dir}/qml/QtGraphicalEffects/libqtgraphicaleffectsplugin.so
+%{qt5dir}/qml/QtGraphicalEffects/plugins.qmltypes
+%{qt5dir}/qml/QtGraphicalEffects/qmldir
+%{qt5dir}/qml/QtGraphicalEffects/*.qml
+%dir %{qt5dir}/qml/QtGraphicalEffects/private
+# R: Core Gui Qml Quick
+%attr(755,root,root) %{qt5dir}/qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate.so
+%{qt5dir}/qml/QtGraphicalEffects/private/qmldir
+%{qt5dir}/qml/QtGraphicalEffects/private/*.qml
+%{qt5dir}/qml/QtGraphicalEffects/private/*.qmlc
 
 %if %{with doc}
 %files doc
