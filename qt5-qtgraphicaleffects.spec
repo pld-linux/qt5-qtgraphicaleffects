@@ -9,12 +9,12 @@
 Summary:	The Qt5 Graphical Effects module
 Summary(pl.UTF-8):	Moduł Qt5 Graphical Effects
 Name:		qt5-%{orgname}
-Version:	5.15.11
+Version:	5.15.12
 Release:	1
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	https://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
-# Source0-md5:	da38b973d21396843b7eb3f914fddcb9
+# Source0-md5:	5516528fa71b375c1cb650f24db0c2ca
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
